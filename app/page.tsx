@@ -1,8 +1,8 @@
-"use client";
-import react, {useState} from 'react';
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
-import WorldMap from'../../public/Simple_world_map.svg';
-
+import WorldMap from '../public/Simple_world_map.svg';
+import './globals.css';
 
 const Home = () => {
   const [visaRequirement, setVisaRequirement] = useState<string | null>(null);
@@ -12,7 +12,13 @@ const Home = () => {
 
   const checkVisaRequirement = async () => {
     try {
-      const response = await fetch(`/api/route?origin_country=${originCountry}&arrival_country=${arrivalCountry}`);
+      const response = await fetch(`/api?originCountry=${originCountry}&arrivalCountry=${arrivalCountry}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ originCountry, arrivalCountry }),
+      },
+      );
+      console.log('response:', response);
       const data = await response.json();
       if (response.ok) {
         setVisaRequirement(data.visaRequirement);
@@ -34,7 +40,7 @@ const Home = () => {
       </div>
       <div className="flex items-center justify-center py-2">
         <input
-          className='rounded-md text-gray-900 px-2 py-2'
+          className="rounded-md px-2 py-2 text-gray-900"
           type="text"
           placeholder="Country of Origin"
           value={originCountry}
@@ -43,38 +49,37 @@ const Home = () => {
       </div>
       <div className="flex items-center justify-center py-2">
         <input
-          className='rounded-md text-gray-900 px-2 py-2'
+          className="rounded-md px-2 py-2 text-gray-900"
           type="text"
           placeholder="Arrival Country"
           value={arrivalCountry}
           onChange={(e) => setArrivalCountry(e.target.value)}
         />
       </div>
-      <div className='flex justify-center items-center py-2'>
-        <button className='bg-violet-500 rounded-lg px-6 py-4 hover:bg-violet-700' onClick={checkVisaRequirement}>
+      <div className="flex items-center justify-center py-2">
+        <button
+          type="button"
+          className="rounded-lg bg-violet-500 px-6 py-4 hover:bg-violet-700"
+          onClick={checkVisaRequirement}
+        >
           Check Visa Requirement
         </button>
       </div>
       {visaRequirement && (
-        <div className='flex justify-center items-center py-2'>
+        <div className="flex items-center justify-center py-2">
           <p>{visaRequirement}</p>
         </div>
       )}
       {error && (
-        <div className='flex justify-center items-center py-2'>
+        <div className="flex items-center justify-center py-2">
           <p>{error}</p>
         </div>
       )}
       <div className="flex items-center justify-center">
-        <Image
-          src={WorldMap}
-          alt="world map"
-          width={2000}
-        />
+        <Image src={WorldMap} alt="world map" width={2000} height={1000} />
       </div>
     </div>
   );
 };
-
 
 export default Home;
