@@ -3,8 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { passportCountry, destinationCountry } = req.body;
 
-  console.log(passportCountry, destinationCountry);
-
   try {
     const response = await fetch(
       `https://rough-sun-2523.fly.dev/api/${passportCountry}/${destinationCountry}`,
