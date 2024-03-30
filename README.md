@@ -10,4 +10,6 @@ You can check out [ISO-2 reference](https://en.wikipedia.org/wiki/ISO_3166-1_alp
 
 ## Future Updates
 
-More updates are scheduled for the future, namely a feature to input your passport country only, and retrieve a list of all countries and their visa requirements for travel
+More updates are scheduled for the future:
+- Prettifying the frontend of the app
+- Feature to input your passport country only, and retrieve a list of all countries and their visa requirements for travel
