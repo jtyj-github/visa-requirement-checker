@@ -20,7 +20,6 @@ const VisaInput = () => {
       });
 
       const data = await response.json();
-      //console.log(data);
 
       if (!response.ok) {
         throw new Error('Failed to fetch data from external API');
