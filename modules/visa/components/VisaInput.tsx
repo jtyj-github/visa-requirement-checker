@@ -1,12 +1,20 @@
 import { useState } from 'react';
+import countries from 'i18n-iso-countries';
 
 const VisaInput = () => {
+  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+
   const [visaRequirement, setVisaRequirement] = useState<string | null>(null);
   const [duration, setDuration] = useState<string | null>(null);
   const [passportCountry, setPassportCountry] = useState<string>('');
   const [destinationCountry, setDestinationCountry] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   const handleCheckVisa = async () => {
+
+    const passportCode = countries.getAlpha2Code(passportCountry, "en");
+    const destinationCode = countries.getAlpha2Code(destinationCountry, "en");
+
     try {
       const response = await fetch(`/api/HandleFetchFor2Country`, {
         method: 'POST',
@@ -14,12 +22,19 @@ const VisaInput = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          passportCountry,
-          destinationCountry,
+          passportCode,
+          destinationCode,
         }),
       });
 
       const data = await response.json();
+      
+      if (passportCode === undefined || destinationCode === undefined) {
+        setMessage('Invalid country name. Please check the spelling.');
+        setVisaRequirement(null);
+        setDuration(null);
+        return;
+      }
 
       if (!response.ok) {
         throw new Error('Failed to fetch data from external API');
@@ -85,24 +100,9 @@ const VisaInput = () => {
           </div>
         </div>
       )}
-      <div>
-        <p className="flex justify-center py-1 text-sm opacity-60">
-          Please input the passport country and destination country in ISO 2
-          Country code format.
-        </p>{' '}
-        <p className="flex justify-center py-1 text-sm opacity-60">
-          E.g. US for United States, CA for Canada, etc.{' '}
-        </p>{' '}
-        <p className="flex justify-center py-1 text-sm opacity-60">
-          To see all the ISO 2 Country codes, visit here:
-        </p>
-        <a
-          className="flex justify-center py-1 opacity-60 underline"
-          href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"
-        >
-          ISO2 Country Code Reference
-        </a>
-      </div>
+      {message && <div>
+        <p> {message} </p>
+      </div>}
     </div>
   );
 };
