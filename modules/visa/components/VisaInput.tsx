@@ -4,6 +4,7 @@ import countries from 'i18n-iso-countries';
 const VisaInput = () => {
   countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
+
   const [visaRequirement, setVisaRequirement] = useState<string | null>(null);
   const [duration, setDuration] = useState<string | null>(null);
   const [passportCountry, setPassportCountry] = useState<string>('');
@@ -11,12 +12,10 @@ const VisaInput = () => {
   const [message, setMessage] = useState<string>('');
 
   const handleCheckVisa = async () => {
-    const passportCode = countries.getAlpha2Code(passportCountry, 'en');
-    const destinationCode = countries.getAlpha2Code(destinationCountry, 'en');
 
-    console.log(passportCountry, destinationCountry);
-    console.log(passportCode, destinationCode);
-    console.log(JSON.stringify({ passportCode, destinationCode }));
+    const passportCode = countries.getAlpha2Code(passportCountry, "en");
+    const destinationCode = countries.getAlpha2Code(destinationCountry, "en");
+
 
     try {
       const response = await fetch(`/api/HandleFetchFor2Country`, {
@@ -30,6 +29,13 @@ const VisaInput = () => {
         }),
       });
       const data = await response.json();
+      
+      if (passportCode === undefined || destinationCode === undefined) {
+        setMessage('Invalid country name. Please check the spelling.');
+        setVisaRequirement(null);
+        setDuration(null);
+        return;
+      }
 
       if (passportCode === undefined || destinationCode === undefined) {
         setMessage('Invalid country name. Please check the spelling.');
@@ -104,11 +110,13 @@ const VisaInput = () => {
           </div>
         </div>
       )}
+
       {message && (
       <div className='border-2 border-gray-600 bg-slate-800 p-4' >
         <p className='flex items-center justify-center py-2 text-xl font-bold'> {message} </p>
       </div>
       )}
+
     </div>
   );
 };
