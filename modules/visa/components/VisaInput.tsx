@@ -2,7 +2,8 @@ import { useState } from 'react';
 import countries from 'i18n-iso-countries';
 
 const VisaInput = () => {
-  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+  countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
+
 
   const [visaRequirement, setVisaRequirement] = useState<string | null>(null);
   const [duration, setDuration] = useState<string | null>(null);
@@ -15,6 +16,7 @@ const VisaInput = () => {
     const passportCode = countries.getAlpha2Code(passportCountry, "en");
     const destinationCode = countries.getAlpha2Code(destinationCountry, "en");
 
+
     try {
       const response = await fetch(`/api/HandleFetchFor2Country`, {
         method: 'POST',
@@ -26,7 +28,6 @@ const VisaInput = () => {
           destinationCode,
         }),
       });
-
       const data = await response.json();
       
       if (passportCode === undefined || destinationCode === undefined) {
@@ -36,11 +37,20 @@ const VisaInput = () => {
         return;
       }
 
+      if (passportCode === undefined || destinationCode === undefined) {
+        setMessage('Invalid country name. Please check the spelling.');
+        setVisaRequirement(null);
+        setDuration(null);
+        return;
+      }
+      console.log(message);
+
       if (!response.ok) {
         throw new Error('Failed to fetch data from external API');
+      } else {
+        setVisaRequirement(data.category);
+        setDuration(data.dur);
       }
-      setVisaRequirement(data.category);
-      setDuration(data.dur);
     } catch (error) {
       console.error();
       setDuration('Unknown error occurred. Please try again.');
@@ -95,9 +105,13 @@ const VisaInput = () => {
           </div>
         </div>
       )}
-      {message && <div>
-        <p> {message} </p>
-      </div>}
+
+      {message && (
+      <div className='border-2 border-gray-600 bg-slate-800 p-4' >
+        <p className='flex items-center justify-center py-2 text-xl font-bold'> {message} </p>
+      </div>
+      )}
+
     </div>
   );
 };
