@@ -84,11 +84,6 @@ const VisaInput = () => {
       </div>
       {visaRequirement && (
         <div className="border-2 border-gray-600 bg-slate-800 p-4 text-gray-100">
-          {passportCountry && (
-            <div className="flex items-center justify-center text-lg font-bold">
-              <p> Passport Country: {passportCountry}</p>
-            </div>
-          )}
           {destinationCountry && (
             <div className="flex items-center justify-center text-lg font-bold">
               <p> Traveling to: {destinationCountry}</p>
