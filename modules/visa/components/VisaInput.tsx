@@ -110,28 +110,30 @@ const VisaInput = () => {
           )}
         </button>
       </div>
+      <div className='flex justify-center p-4'>
       {visaRequirement && (
-        <div className="border-2 border-gray-600 bg-slate-800 p-4 text-gray-100">
+        <div className="flex justify-center w-80 border-2 rounded-xl border-gray-400 bg-slate-800 p-4 text-gray-100">
           {destinationCountry && (
-            <div className="flex items-center justify-center text-lg font-bold">
+            <div className="text-lg font-bold">
               <p> Traveling to: {destinationCountry}</p>
             </div>
           )}
-          <div className="flex items-center justify-center text-lg font-bold">
+          <div className="text-lg font-bold">
             {visaRequirement && <p> Visa required: {visaRequirement}</p>}
             {duration && <p>/{duration} days</p>}
           </div>
         </div>
       )}
-
+      
       {message && (
-        <div className="border-2 border-gray-600 bg-slate-800 p-4">
-          <p className="flex items-center justify-center py-2 text-xl font-bold">
+        <div className="flex justify-center w-80 border-2 rounded-xl border-gray-400 bg-slate-800 p-4 text-gray-100">
+          <p className="text-xl font-bold">
             {' '}
             {message}{' '}
           </p>
         </div>
       )}
+      </div>
     </div>
   );
 };
