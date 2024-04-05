@@ -74,9 +74,9 @@ const VisaInput = () => {
           className="text-md rounded-lg border border-gray-300 bg-gray-50 px-8 py-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           type="text"
           placeholder="Passport Country"
-          value={passportCountry}
+          value={passportCountry.trim()}
           onChange={(e) => {
-            setPassportCountry(e.target.value);
+            setPassportCountry(e.target.value.trim());
             setVisaRequirement(null);
           }}
         />
@@ -88,7 +88,7 @@ const VisaInput = () => {
           placeholder="Destination Country"
           value={destinationCountry}
           onChange={(e) => {
-            setDestinationCountry(e.target.value);
+            setDestinationCountry(e.target.value.trim());
             setVisaRequirement(null);
           }}
         />
@@ -97,12 +97,13 @@ const VisaInput = () => {
       <div className="flex justify-center py-2">
         <button
           type="button"
-          className="text-lg rounded-lg bg-blue-500 px-10 py-6 hover:bg-blue-700"
+          className="rounded-lg bg-blue-500 px-10 py-6 text-lg hover:bg-blue-700"
           onClick={handleCheckVisa}
         >
           {isLoading ? (
             <>
-              {' '}Checking...{' '}
+              {' '}
+              Checking...{' '}
               <i className="fa-solid fa-circle-notch animate-spin" />
             </>
           ) : (
@@ -110,29 +111,26 @@ const VisaInput = () => {
           )}
         </button>
       </div>
-      <div className='flex justify-center p-4'>
-      {visaRequirement && (
-        <div className="flex justify-center w-80 border-2 rounded-xl border-gray-400 bg-slate-800 p-4 text-gray-100">
-          {destinationCountry && (
+      <div className="flex justify-center p-4">
+        {visaRequirement && (
+          <div className="flex w-80 justify-center rounded-xl border-2 border-gray-400 bg-slate-800 p-4 text-gray-100">
+            {destinationCountry && (
+              <div className="text-lg font-bold">
+                <p> Traveling to: {destinationCountry}</p>
+              </div>
+            )}
             <div className="text-lg font-bold">
-              <p> Traveling to: {destinationCountry}</p>
+              {visaRequirement && <p> Visa required: {visaRequirement}</p>}
+              {duration && <p>/{duration} days</p>}
             </div>
-          )}
-          <div className="text-lg font-bold">
-            {visaRequirement && <p> Visa required: {visaRequirement}</p>}
-            {duration && <p>/{duration} days</p>}
           </div>
-        </div>
-      )}
-      
-      {message && (
-        <div className="flex justify-center w-80 border-2 rounded-xl border-gray-400 bg-slate-800 p-4 text-gray-100">
-          <p className="text-xl font-bold">
-            {' '}
-            {message}{' '}
-          </p>
-        </div>
-      )}
+        )}
+
+        {message && (
+          <div className="flex w-80 justify-center rounded-xl border-2 border-gray-400 bg-slate-800 p-4 text-gray-100">
+            <p className="text-xl font-bold"> {message} </p>
+          </div>
+        )}
       </div>
     </div>
   );
