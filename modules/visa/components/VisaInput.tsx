@@ -14,6 +14,7 @@ const VisaInput = () => {
   const handleCheckVisa = async () => {
     const passportCode = countries.getAlpha2Code(passportCountry, 'en');
     const destinationCode = countries.getAlpha2Code(destinationCountry, 'en');
+    setMessage('');
 
     try {
       setIsLoading(true);
@@ -115,13 +116,15 @@ const VisaInput = () => {
         {visaRequirement && (
           <div className="flex w-80 justify-center rounded-xl border-2 border-gray-400 bg-slate-800 p-4 text-gray-100">
             {destinationCountry && (
-              <div className="text-lg font-bold">
-                <p> Traveling to: {destinationCountry}</p>
+              <div className='px-4'>
+                <p className='underline italic'> Destination:</p>
+                <h3 className='font-bold text-xxl'>{destinationCountry}</h3>
               </div>
             )}
-            <div className="text-lg font-bold">
-              {visaRequirement && <p> Visa required: {visaRequirement}</p>}
-              {duration && <p>/{duration} days</p>}
+            <div className='px-4'>
+              <p className='underline italic'> Visa Required:</p>
+              <h3 className='font-semibold text-xxl'>{visaRequirement}</h3>
+              <h3 className='font-semibold text-xxl'>{duration} days</h3>
             </div>
           </div>
         )}
