@@ -1,5 +1,6 @@
 # Travel Visa Requirement Checker Project
-#### Video Demo: INSERT URL HERE
+
+#### Video Demo: [INSERT URL HERE](https://youtu.be/JRhjmEcQhM0)
 #### Description:
 This webpage was created in order for travelers to check whether they required a travelers visa when going to a particular country. The idea for this webpage was inspired when I was chatting and planning a trip with some friends from different nationalities. The webpage hopes to help streamline the process of researching what kind of visa one might need when traveling to a particular country, cutting out the tedious processing of searching online, and instead, let the traveler focus on applying for the visa itself.
 
@@ -29,7 +30,7 @@ There is only 1 file in this folder, titled VisaInput.tsx. The file begins by us
 From line 55 onwards, the code brings in the fontawesome CDN, solely for the loading animation when the user clicks on the button to generate the visa requirement. 
 Subsequently, there are 2 inputs for the user to fill in, the origin country and the destination country. The values of this inputs will also be trimmed to reduce the chances of errors from users having whitespace in their inputs (eg. extra space, space at the end of the word, etc)
 There is also a button below the 2 inputs which will call the HandleCheckVisa function when clicked, which will be dived deeper later on. 
-Finally, there is an additional card component, which will appear after the api is successfully called, which shows the name of the destination country input by the user, along with the visa required and its duration of validity. If the api is unsuccessfully called, an error message will pop up instead, prompting the user to try again.
+Finally, there is an additional card component, which will appear after the api is successfully called, which shows the name of the destination country input by the user, along with the visa required and if it is visa-free, the duration of validity. If the api is unsuccessfully called, an error message will pop up instead, prompting the user to try again.
 
 #### HandleCheckVisa Function, line 14
 

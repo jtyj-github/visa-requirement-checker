@@ -12,8 +12,8 @@ const VisaInput = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCheckVisa = async () => {
-    const passportCode = countries.getAlpha2Code(passportCountry, 'en');
-    const destinationCode = countries.getAlpha2Code(destinationCountry, 'en');
+    const passportCode = countries.getAlpha2Code(passportCountry.trim(), 'en');
+    const destinationCode = countries.getAlpha2Code(destinationCountry.trim(), 'en');
     setMessage('');
 
     try {
@@ -69,7 +69,7 @@ const VisaInput = () => {
           placeholder="Passport Country"
           value={passportCountry}
           onChange={(e) => {
-            setPassportCountry(e.target.value.trim());
+            setPassportCountry(e.target.value);
             setVisaRequirement(null);
           }}
         />
@@ -81,7 +81,7 @@ const VisaInput = () => {
           placeholder="Destination Country"
           value={destinationCountry}
           onChange={(e) => {
-            setDestinationCountry(e.target.value.trim());
+            setDestinationCountry(e.target.value);
             setVisaRequirement(null);
           }}
         />
@@ -116,7 +116,7 @@ const VisaInput = () => {
             <div className='px-4'>
               <p className='underline italic'> Visa Required:</p>
               <h3 className='font-semibold text-xxl'>{visaRequirement}</h3>
-              <h3 className='font-semibold text-xxl'>{duration} days</h3>
+              { duration && (<h3 className='font-semibold text-xxl'>{duration} days</h3>)}
             </div>
           </div>
         )}
