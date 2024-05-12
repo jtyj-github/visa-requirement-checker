@@ -38,14 +38,6 @@ const VisaInput = () => {
         return;
       }
 
-      if (passportCode === undefined || destinationCode === undefined) {
-        setMessage('Invalid country name. Please check the spelling.');
-        setVisaRequirement(null);
-        setDuration(null);
-        return;
-      }
-      console.log(message);
-
       if (!response.ok) {
         throw new Error('Failed to fetch data from external API');
       } else {
@@ -72,10 +64,10 @@ const VisaInput = () => {
 
       <div className="flex justify-center py-2">
         <input
-          className="text-md rounded-lg border border-gray-300 bg-gray-50 px-8 py-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="autofocus text-md rounded-lg border border-gray-300 bg-gray-50 px-8 py-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           type="text"
           placeholder="Passport Country"
-          value={passportCountry.trim()}
+          value={passportCountry}
           onChange={(e) => {
             setPassportCountry(e.target.value.trim());
             setVisaRequirement(null);
